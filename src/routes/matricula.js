@@ -1,48 +1,48 @@
 const express = require("express");
-const userSchema = require("../models/user");
+const matriculaSchema = require("../models/matricula");
 
 const router = express.Router();
 
 //crear usuario
-router.post('/users', (req, res) =>{
-    const  user = userSchema(req.body);
-    user
+router.post('/matriculas', (req, res) =>{
+    const  matricula = matriculaSchema(req.body);
+    matricula
     .save()
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}));
 });
 
 //obtener todos los usuarios
-router.get('/users', (req, res) =>{
-    userSchema
+router.get('/matriculas', (req, res) =>{
+    matriculaSchema
     .find()
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}));
 });
 
 //obtener un usuario en especifico
-router.get('/users/:id', (req, res) =>{
+router.get('/matriculas/:id', (req, res) =>{
     const { id } = req.params;
-    userSchema
+    matriculaSchema
     .findById(id)
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}));
 });
 
 //Actualizar usuario
-router.put('/users/:id', (req, res) =>{
+router.put('/matriculas/:id', (req, res) =>{
     const { id } = req.params;
-    const {codigo, nombre, apellido, correo, edad, gradoEstudios} = req.body;
-    userSchema
-    .updateOne({ _id: id},{ $set: {codigo, nombre, apellido, correo, edad, gradoEstudios}})
+    const {codigo, idAlumno, idCurso, idProfesor} = req.body;
+    matriculaSchema
+    .updateOne({ _id: id},{ $set: {codigo, idAlumno, idCurso, idProfesor}})
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}));
 });
 
 //Eliminar usuario
-router.delete('/users/:id', (req, res) =>{
+router.delete('/matriculas/:id', (req, res) =>{
     const { id } = req.params;
-    userSchema
+    matriculaSchema
     .remove({ _id: id})
     .then((data) => res.json(data))
     .catch((error)=> res.json({message: error}));
